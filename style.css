@@ -1,0 +1,138 @@
+body {
+  background-color: #708090;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-template-rows: repeat(6, auto);
+  grid-template-areas:
+    "input input input input"
+    "clear back percent div"
+    "seven eight nine mult"
+    "four five six minus"
+    "one two three plus"
+    "zero dec plusminus equal";
+  position: relative;
+  height: 70vh;
+  width: 60vh;
+  margin: 15vh auto auto;
+  padding: 1%;
+  border-radius: 1rem;
+  background-color: #8899ac;
+  border: solid 1px #565656e8;
+}
+
+.input-div {
+  grid-area: input;
+  background-color: #98fb98;
+  text-align: right;
+  font-size: 55px;
+  font-family: "Orbitron", sans-serif;
+  border-radius: 1rem;
+  margin: 10px 6px;
+  vertical-align: middle;
+  padding: 15px;
+}
+
+button {
+  border: 1px solid #708090;
+  background-color: #a9a9a9;
+  color: #ffffff;
+  font: bold large helvetica;
+  font-size: 40px;
+  outline: none;
+  margin: 4px;
+  border-radius: 1rem;
+  padding: 3px 6px;
+  text-align: center;
+}
+
+.important-btn {
+  background-color: #cd5c5c;
+}
+
+.opr-btn {
+  background-color: #ffa500;
+}
+
+#clear-btn {
+  grid-area: clear;
+}
+
+#back-btn {
+  grid-area: back;
+}
+
+#percent-btn {
+  grid-area: percent;
+}
+
+#div-btn {
+  grid-area: div;
+}
+
+#mult-btn {
+  grid-area: mult;
+}
+
+#minus-btn {
+  grid-area: minus;
+}
+
+#plus-btn {
+  grid-area: plus;
+}
+
+#equal-btn {
+  grid-area: equal;
+  background-color: #6b8e23;
+}
+
+#seven {
+  grid-area: seven;
+}
+
+#eight {
+  grid-area: eight;
+}
+
+#nine {
+  grid-area: nine;
+}
+
+#four {
+  grid-area: four;
+}
+
+#five {
+  grid-area: five;
+}
+
+#six {
+  grid-area: six;
+}
+
+#one {
+  grid-area: one;
+}
+
+#two {
+  grid-area: two;
+}
+
+#three {
+  grid-area: three;
+}
+
+#zero {
+  grid-area: zero;
+}
+
+#dec {
+  grid-area: dec;
+}
+
+#plusminus {
+  grid-area: plusminus;
+}
