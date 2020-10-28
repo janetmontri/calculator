@@ -1,120 +1,108 @@
+var GlobalObj = {};
+GlobalObj.eqWasPressed = true;
+GlobalObj.useNextNum = true;
+GlobalObj.startNewNum = true;
+
+
 // add
-function add(a, b) {
-    return a + b;
-  }  
+function add(p_a, p_b) {
+    return p_a + p_b;
+}  
 
 // subtract
-function subtract(a, b) {
-    return a - b;
-  }
-
-// multiply
-function multiply(a, b) {
-    return a * b;
+function subtract(p_a, p_b) {
+    return p_a - p_b;
 }
 
-// divide
-function divide(a, b) {
-    return a / b;
+function displayNum(p_a, p_b) {
+    const l_inputDiv = document.querySelector(".input-div");
+
+    if (GlobalObj.startNewNum) {
+        l_inputDiv.textContent = "" + p_b;
+        GlobalObj.startNewNum = false;
+       } else {
+       l_inputDiv.textContent = p_a + p_b;
+       }
 }
 
-// percent
-function percent(a) {
-    return a * 100;
+// minusBtn
+function minus(p_a) {
+    const l_inputDiv = document.querySelector(".input-div");
+
+    if (GlobalObj.eqWasPressed === false) {
+        let l_result = subtract(p_a, parseFloat(l_inputDiv.textContent));
+        l_inputDiv.textContent = l_result;
+    } 
+    GlobalObj.startNewNum = true;
+    GlobalObj.useNextNum = true;
+    GlobalObj.eqWasPressed = false;
+    return parseFloat(l_inputDiv.textContent);
 }
-
-// +/-
-function plusMinus(a) {
-    return a * -1
-}
-
-// identify the operation and find the right function
-// function idOp(numInDisplay, op) {
-//     var num1 = numInDisplay;
-
-//     if (op ==="div-btn") {
-//         return div = true;
-//     }
-//     if (op ==="mult-btn") {
-//         return mult = true;
-//     }
-//     if (op === "minus-btn") {
-//         return minus = true;
-//     }
-//     if (op === "plus-btn") {
-//         return plus = true;
-//     }
-
-//     console.log(num1);
-//     console.log(plus);
-// }
 
 // operator
-function operate(a, b) {
-    let num1 = a;
+function operate(p_a, p_b, p_op) {
+    const l_inputDiv = document.querySelector(".input-div");
+    let l_result;
+    
+    if (p_op === 3) {
+        if (GlobalObj.useNextNum === true) {
+            p_b = parseFloat(l_inputDiv.textContent);
+        } else {
+            p_a = parseFloat(l_inputDiv.textContent);
+        }
+        console.log("num1 is " + p_a + ", and num2 is " + p_b + ".")
+        l_result = subtract(p_a, p_b);
+   }
+    GlobalObj.useNextNum = false;
+    GlobalObj.eqWasPressed = true;
 
-
+    GlobalObj.startNewNum = true;
+    l_inputDiv.textContent = l_result;
+    return p_b;
 }
 
-// send value to display
-function displayValue(a,b) {
-    if (inputDiv.textContent === "0") {
-        return inputDiv.textContent = "" + b;
-    } 
-    return inputDiv.textContent = a + b;
+
+//   Main
+
+function main() {
+    //let num1 = 0;
+    const l_clrBtn = document.querySelector("#clear-btn");
+    const l_inputDiv = document.querySelector(".input-div");
+    const l_numBtn = document.querySelectorAll(".num-btn");
+    const l_eqBtn = document.querySelector("#equal-btn");
+    const l_minusBtn = document.querySelector("#minus-btn"); 
+    let l_num1 = 0;
+    let l_num2 = 0;
+    let l_currentOp = 0;
+
+    // 0 = none; 1 = divide; 2 = multiply; 3 = subtract; 4 = add
+    l_clrBtn.addEventListener("click", function() {
+        l_inputDiv.textContent = 0;
+        l_num1 = 0;
+        GlobalObj.startNewNum = true;
+        // num1++;
+        // GlobalObj.num1++;
+    });
+
+    l_numBtn.forEach(l_numBtn => {
+        l_numBtn.addEventListener("click", function () {
+            displayNum(l_inputDiv.textContent, l_numBtn.value, GlobalObj.startNewNum)
+        });
+    });
+
+    l_minusBtn.addEventListener("click", function () {
+        l_num1 = minus(l_num1);
+        l_currentOp = 3;
+    });
+
+    l_eqBtn.addEventListener("click", function() {console.log(l_num1);
+        l_num2 = operate(l_num1, l_num2, l_currentOp);
+    });
 }
 
-// clear
-
-
-// backspace
-
-
-// Logic Flow
-const clrBtn = document.querySelector("#clear-btn");
-const inputDiv = document.querySelector(".input-div");
-const numBtn = document.querySelectorAll(".num-btn");
-
-const divBtn = document.querySelector("#div-btn");
-const multBtn = document.querySelector("#mult-btn");
-const minusBtn = document.querySelector("#minus-btn");
-const plusBtn = document.querySelector("#plus-btn");
-
-clrBtn.addEventListener("click", function() {inputDiv.textContent = " ";})
-
-numBtn.forEach(numBtn => {
-    numBtn.addEventListener("click", function () {displayValue(inputDiv.textContent, numBtn.value)}
-    );
-  });
-
-
-divBtn.addEventListener("click", function() {
-    var num1 = inputDiv.textContent;
-    div = true;
-    inputDiv.textContent = "";
-}
-);
-
-multBtn.addEventListener("click", function() {
-    var num1 = inputDiv.textContent;
-    mult = true;
-    inputDiv.textContent = "";
-}
-);
-
-minusBtn.addEventListener("click", function() {
-    var num1 = inputDiv.textContent;
-    minus = true;
-    inputDiv.textContent = "";
-}
-);
-
-plusBtn.addEventListener("click", function() {
-    var num1 = inputDiv.textContent;
-    plus = true;
-    inputDiv.textContent = "";
-}
-);
 
 
 
+// RUN SCRIPT
+
+main();
