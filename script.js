@@ -3,12 +3,16 @@ GlobalObj.eqWasPressed = true;
 GlobalObj.useNextNum = true;
 GlobalObj.startNewNum = true;
 
-function divide(a, b) {
-    return a / b;
+function divide(dividend, divisor) {
+    if (divisor === 0) {
+        return "Nuh uh uh!";
+    } else {
+        return dividend / divisor;
+    };
 }
 
-function multiply(a, b) {
-    return a * b;
+function multiply(p_a, p_b) {
+    return p_a * p_b;
 }
 
 function subtract(p_a, p_b) {
@@ -20,20 +24,30 @@ function add(p_a, p_b) {
 }  
 
 
-function displayNum(p_a, p_b) {
+function displayNum (p_btnVal) {
     const l_inputDiv = document.querySelector(".input-div");
-    if (GlobalObj.startNewNum) {
-        l_inputDiv.textContent = "" + p_b;
-        GlobalObj.startNewNum  = false;
+    if (GlobalObj.startNewNum === true) {
+        if (p_btnVal === ".") {
+            l_inputDiv.textContent = "0" + p_btnVal;
+            document.querySelector("#dec-btn").disabled = true;
+        } else {
+            l_inputDiv.textContent = "" + p_btnVal;
+        }
+            GlobalObj.startNewNum  = false;
     } else {
-        l_inputDiv.textContent = p_a + p_b;
+        l_inputDiv.textContent += p_btnVal;
+            if (p_btnVal === ".") {
+                document.querySelector("#dec-btn").disabled = true;
+            }
     }
 }
+
 
 function divideWasPressed(p_a, p_op) {
     const l_inputDiv = document.querySelector(".input-div");
     GlobalObj.startNewNum = true;
     GlobalObj.useNextNum  = true;
+    document.querySelector("#dec-btn").disabled = false;
     if (GlobalObj.eqWasPressed === false) {
         if (p_op === 1) {
             let l_result = divide(p_a, parseFloat(l_inputDiv.textContent));
@@ -60,6 +74,7 @@ function multiplyWasPressed(p_a, p_op) {
     const l_inputDiv = document.querySelector(".input-div");
     GlobalObj.startNewNum = true;
     GlobalObj.useNextNum  = true;
+    document.querySelector("#dec-btn").disabled = false;
     if (GlobalObj.eqWasPressed === false) {
         if (p_op === 2) {
             let l_result = multiply( p_a, parseFloat(l_inputDiv.textContent) );
@@ -86,6 +101,7 @@ function minusWasPressed(p_a, p_op) {
     const l_inputDiv = document.querySelector(".input-div");
     GlobalObj.startNewNum = true;
     GlobalObj.useNextNum  = true;
+    document.querySelector("#dec-btn").disabled = false;
     if (GlobalObj.eqWasPressed === false) {
         if (p_op === 3) {
             let l_result = subtract(p_a, parseFloat(l_inputDiv.textContent));
@@ -113,6 +129,7 @@ function plusWasPressed(p_a, p_op) {
     const l_inputDiv = document.querySelector(".input-div");
     GlobalObj.startNewNum = true;
     GlobalObj.useNextNum  = true;
+    document.querySelector("#dec-btn").disabled = false;
     if (GlobalObj.eqWasPressed === false) {
         if (p_op === 4) {
             let l_result = add(p_a, parseFloat(l_inputDiv.textContent));
@@ -174,11 +191,11 @@ function makeNumFit(p_num) {
     }
 }
 
-function tooManyDec(p_str) {
-    if (p_str.includes(".") === true) {
-        alert("Oops!  That's too many decimal points!")
-    };
-}
+// function tooManyDec(p_str) {
+//     if (p_str.includes(".")) {
+//         alert("Oops!  That's too many decimal points!")
+//     };
+// }
 
 
 //   Main
@@ -188,11 +205,10 @@ function main() {
     const l_inputDiv = document.querySelector(".input-div");
     const l_numBtn   = document.querySelectorAll(".num-btn");
     const l_eqBtn    = document.querySelector("#equal-btn");
-    const l_divBtn   = document.querySelector("#div-btn"); 
-    const l_multBtn  = document.querySelector("#mult-btn"); 
-    const l_minusBtn = document.querySelector("#minus-btn"); 
-    const l_plusBtn  = document.querySelector("#plus-btn"); 
-    const l_decBtn   = document.querySelector("#dec-btn");
+    const l_divBtn   = document.querySelector("#divide"); 
+    const l_multBtn  = document.querySelector("#multiply"); 
+    const l_minusBtn = document.querySelector("#subtract"); 
+    const l_plusBtn  = document.querySelector("#add"); 
     let l_num1      = 0;
     let l_num2      = 0;
     let l_currentOp = 0;
@@ -205,11 +221,12 @@ function main() {
         GlobalObj.eqWasPressed = true;
         GlobalObj.useNextNum = true;
         GlobalObj.startNewNum = true;
+        document.querySelector("#dec-btn").disabled = false;
     });
 
     l_numBtn.forEach(l_numBtn => {
         l_numBtn.addEventListener("click", function () {
-            displayNum(l_inputDiv.textContent, l_numBtn.value, GlobalObj.startNewNum)
+            displayNum(l_numBtn.value)
         });
     });
 
@@ -232,10 +249,6 @@ function main() {
         l_num1 = plusWasPressed(l_num1, l_currentOp);
         l_currentOp = 4;
     });
-
-    l_decBtn.addEventListener("click", function() {
-        tooManyDec(l_inputDiv.textContent);
-    })
 
     l_eqBtn.addEventListener("click", function() {
         l_num2 = eqWasPressed(l_num1, l_num2, l_currentOp);
