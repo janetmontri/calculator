@@ -36,9 +36,9 @@ function displayNum (p_btnVal) {
             GlobalObj.startNewNum  = false;
     } else {
         l_inputDiv.textContent += p_btnVal;
-            if (p_btnVal === ".") {
-                document.querySelector("#dec-btn").disabled = true;
-            }
+        if (p_btnVal === ".") {
+            document.querySelector("#dec-btn").disabled = true;
+        }
     }
 }
 
@@ -191,12 +191,6 @@ function makeNumFit(p_num) {
     }
 }
 
-// function tooManyDec(p_str) {
-//     if (p_str.includes(".")) {
-//         alert("Oops!  That's too many decimal points!")
-//     };
-// }
-
 
 //   Main
 function main() {
@@ -209,9 +203,10 @@ function main() {
     const l_multBtn  = document.querySelector("#multiply"); 
     const l_minusBtn = document.querySelector("#subtract"); 
     const l_plusBtn  = document.querySelector("#add"); 
-    let l_num1      = 0;
-    let l_num2      = 0;
-    let l_currentOp = 0;
+    const l_backBtn  = document.querySelector("#back-btn");
+    let l_num1       = 0;
+    let l_num2       = 0;
+    let l_currentOp  = 0;
     // 0 = none; 1 = divide; 2 = multiply; 3 = subtract; 4 = add
     l_clrBtn.addEventListener("click", function() {
         l_inputDiv.textContent = 0;
@@ -253,6 +248,13 @@ function main() {
     l_eqBtn.addEventListener("click", function() {
         l_num2 = eqWasPressed(l_num1, l_num2, l_currentOp);
     });
+
+    l_backBtn.addEventListener("click", function () {
+        if (GlobalObj.startNewNum === false) {
+            l_result = l_inputDiv.textContent.slice(0, -1);
+            l_inputDiv.textContent = l_result;
+        }
+    })
 }
 
 // RUN SCRIPT
